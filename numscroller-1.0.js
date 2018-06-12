@@ -70,19 +70,16 @@
             var increment=$('.roller-title-number-'+slno).attr('data-increment');
             var numdiff=max-min;
             var timeout=(timediff*1000)/numdiff;
-            //if(numinc<10){
-                //increment=Math.floor((timediff*1000)/10);
-            //}//alert(increment);
             numberRoll(slno,min,max,increment,timeout);
             
     }
-    function numberRoll(slno,min,max,increment,timeout){//alert(slno+"="+min+"="+max+"="+increment+"="+timeout);
-        if(min<=max){
-            $('.roller-title-number-'+slno).html(min);
-            min=parseInt(min)+parseInt(increment);
-            setTimeout(function(){numberRoll(eval(slno),eval(min),eval(max),eval(increment),eval(timeout))},timeout);
-        }else{
-            $('.roller-title-number-'+slno).html(max);
-        }
+    function numberRoll(slno,min,max,increment,timeout){
+            if(min<=max){
+                $('.roller-title-number-'+slno).html(String(min).replace(/(.)(?=(\d{3})+$)/g,'$1,') + $('.roller-title-number-'+slno).attr('data-extra'));
+                min=parseInt(min)+parseInt(increment);
+                setTimeout(function(){numberRoll(eval(slno),eval(min),eval(max),eval(increment),eval(timeout))},timeout);
+            } else {
+                $('.roller-title-number-'+slno).html(String(max).replace(/(.)(?=(\d{3})+$)/g,'$1,') + $('.roller-title-number-'+slno).attr('data-plus') + $('.roller-title-number-'+slno).attr('data-extra'));
+            }
     }
 })(jQuery);
